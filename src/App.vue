@@ -10,6 +10,12 @@ export default {
     }
   },
   methods: {
+    getProjects() {
+      axios.get(this.apiUrl + "projects").then(response => {
+        console.log(response.data.results);
+        this.projects = response.data.results;
+      })
+    }
 
   },
   mounted() {
