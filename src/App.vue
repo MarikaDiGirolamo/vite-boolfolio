@@ -1,31 +1,30 @@
 <script>
 import AppMain from './components/AppMain.vue'
+import axios from "axios";
 export default {
   components: {
     AppMain
   },
   data() {
     return {
-
+      //store
     }
   },
   methods: {
-    getProjects() {
-      axios.get(this.apiUrl + "projects").then(response => {
-        console.log(response.data.results);
-        this.projects = response.data.results;
-      })
-    }
 
   },
+
   mounted() {
+
 
   }
 }
+
 </script>
 
 <template>
   <AppMain />
+  <router-view></router-view>
 </template>
 
 <style scoped>

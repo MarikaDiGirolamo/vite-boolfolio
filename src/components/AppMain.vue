@@ -1,7 +1,13 @@
 <script>
 import axios from "axios";
+import AppProject from "../pages/AppProject.vue";
+import AppTechnology from "../pages/AppTechnology.vue";
 export default {
     name: "AppMain",
+    components: {
+        AppProject,
+        AppTechnology
+    },
     data() {
         return {
             apiUrl: "http://localhost:8000/api/",
@@ -10,30 +16,40 @@ export default {
 
     },
     methods: {
-
+        getProject() {
+            axios.get(this.apiUrl + "projects").then(response => {
+                // console.log(response.data.results);
+                this.projects = response.data.results;
+                // this.store.projects = response.data.results;
+            })
+        },
     },
     mounted() {
-        axios.get(this.apiUrl + "projects").then(response => {
-            console.log(response.data.results);
-            this.projects = response.data.results;
-        })
+        this.getProject();
     }
+
 }
 
 </script>
 <template>
+    <h1>Qualsiasi cosa</h1>
     <div class="container">
 
-        <div class="card" v-for="project in projects">
+        <div class="card my-3" v-for="project, i in projects " :key="i">
             <h1>{{ project.title }}</h1>
             <h3>Description: {{ project.content }}</h3>
-            <h4>Technology:
-                <span v-if="project.technology" v-for="technology in project.technologies">{{
-                    technologies.name }}&nbsp;</span>
-                <span v-else>Nessuna tecnologia selezionata</span>
-            </h4>
+            <div v-if="project.technologies">
+                <h4>Technology:</h4>
+                <span v-for="technology, i in project.technologies" :key="i">{{
+                    technology.name }}&nbsp;</span>
+
+            </div>
+            <div v-else>
+                <span>Nessuna tecnologia selezionata</span>
+
+            </div>
             <h4>Link:</h4>
-            <a href="">{{ project.link }}</a>
+            <a href="{{ project.link }}">{{ project.link }}</a>
         </div>
     </div>
 </template>
