@@ -1,15 +1,18 @@
 <script>
 import axios from "axios";
-import ProjectCard from "./ProjectCard.vue";
+
+import ProjectCard from "../pages/ProjectCard.vue";
+import { store } from "../data/store";
 
 export default {
-    name: "AppMain",
+    name: "AppProjects",
+
     components: {
         ProjectCard
     },
     data() {
         return {
-            apiUrl: "http://localhost:8000/api/",
+            store,
             projects: [],
             loading: false,
             loadingError: false,
@@ -18,14 +21,14 @@ export default {
         }
     },
     methods: {
-        getPostsWPage(pageNumber) {
+        getPostsPage(pageNumber) {
             this.loading = true
             let config = {
                 params: {
                     page: (pageNumber)
                 }
             };
-            axios.get(this.apiUrl + "projects", config).then(response => {
+            axios.get(this.store.apiUrl + "projects", config).then(response => {
                 console.log(response.data);
                 this.projects = response.data.results.data
                 this.postsCurrentPage = response.data.results.current_page;
@@ -40,7 +43,7 @@ export default {
     },
 
     mounted() {
-        this.getPostsWPage(1)
+        this.getPostsPage(1)
     }
 
 }
@@ -50,16 +53,23 @@ export default {
 </script>
 
 <template>
-    <h1 v-if="loading"> LOADING DATA</h1>
+    <div class="container">
+        <div class="card my-3" v-for="project, i in projects" :key="i">
+            <ProjectCard :project="project" />
+
+        </div>
+    </div>
+
+    <h1 v-if="loading"> LOADING</h1>
 
     <div v-if="!loading">
-        <ProjectCard :project="project" v-for="project, i in projects" :key="i" />
+        <!-- <ProjectCard :project="project" v-for="project, i in projects" :key="i" /> -->
     </div>
-    <a class="button" @click="this.postsCurrentPage > 1 && getPostsWPage(this.postsCurrentPage - 1)">Pagina precedente</a>
-    <a class="button" @click="this.postsCurrentPage && getPostsWPage(pageNumber)" v-for="pageNumber, i in postsTotalPages"
+    <a class="button" @click="this.postsCurrentPage > 1 && getPostsPage(this.postsCurrentPage - 1)">Pagina precedente</a>
+    <a class="button" @click="this.postsCurrentPage && getPostsPage(pageNumber)" v-for="pageNumber, i in postsTotalPages"
         :key="i">{{
             pageNumber }}</a>
     <a class="button"
-        @click="this.postsCurrentPage < this.postsTotalPages && getPostsWPage(this.postsCurrentPage + 1)">Pagina
+        @click="this.postsCurrentPage < this.postsTotalPages && getPostsPage(this.postsCurrentPage + 1)">Pagina
         successiva</a>
 </template>

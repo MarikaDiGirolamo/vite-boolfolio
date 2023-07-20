@@ -1,13 +1,15 @@
 <script>
-import AppMain from './components/AppMain.vue'
-import axios from "axios";
+import AppHeader from './components/AppHeader.vue';
+
+// import { store } from './data/store';
 export default {
   components: {
-    AppMain
+    AppHeader,
+
   },
   data() {
     return {
-      //store
+      // store
     }
   },
   methods: {
@@ -24,10 +26,9 @@ export default {
 
 <template>
   <header>
-    <a href="/">Project</a>
-    <a href="/tech">Technology</a>
+    <AppHeader />
   </header>
-  <AppMain />
+
   <router-view></router-view>
 </template>
 
