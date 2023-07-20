@@ -38,7 +38,7 @@ export default {
 
             </div>
             <h4>Link:</h4>
-            <h4 v-if="project.link_to_project"> link: <a :href="project.link_to_project"> {{ project.link_to_project }} </a>
+            <h4 v-if="project.link"> link: <a :href="project.link"> {{ project.link }} </a>
             </h4>
         </div>
     </div>
