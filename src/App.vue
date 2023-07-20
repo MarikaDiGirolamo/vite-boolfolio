@@ -23,6 +23,10 @@ export default {
 </script>
 
 <template>
+  <header>
+    <a href="/">Project</a>
+    <a href="/tech">Technology</a>
+  </header>
   <AppMain />
   <router-view></router-view>
 </template>

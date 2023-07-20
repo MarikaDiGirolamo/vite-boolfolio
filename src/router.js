@@ -8,12 +8,12 @@ const router = createRouter({
     routes:[
         {
             path: "/",
-            name: "AppProject",
+            name: "Project",
             component: AppProject
         },
         {
             path: "/tech",
-            name: "AppTechnology",
+            name: "Technology",
             component: AppTechnology
         }
     ]
